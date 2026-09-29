@@ -18,6 +18,7 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
             this.context = context;
         }
+        
         public async Task<Category> CreateAsync(Category category)
         {
             context.Categories.Add(category);
@@ -30,6 +31,14 @@ namespace InventoryManagement.Infrastructure.Repositories
             return await context.Categories
                 .Include(c => c.Products)
                 .ToListAsync();
+        }
+
+        public async Task<Category?> GetByIdAsync(Guid id)
+        {
+            return await context.Categories
+                .Include(c => c.Products)
+                .Include(c => c.ParentCategory)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

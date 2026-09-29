@@ -2,6 +2,7 @@
 using InventoryManagement.Application.DTOs.CommandDTOs;
 using InventoryManagement.Application.DTOs.QueryDTOs;
 using InventoryManagement.Application.DTOs.QueryDTOs.GetAllCategories;
+using InventoryManagement.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,15 @@ namespace InventoryManagement.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetAllCategoriesResponseDTO>>> GetAllCategories()
         {
-
+            var result = await mediator.Send(new GetAllCategoriesQuery());
+            return Ok(result);
+        }
+        //GET : {apiBaseUrl}/api/categories/{categoryId}
+        [HttpGet("{categoryId:guid}")]
+        public async Task<IActionResult> GetCategoryById([FromRoute] Guid categoryId)
+        {
+            var result = await mediator.Send(new GetCategoryByIdQuery(categoryId));
+            return Ok(result);
         }
     }
 }

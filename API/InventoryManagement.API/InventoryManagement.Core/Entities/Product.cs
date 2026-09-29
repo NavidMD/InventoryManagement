@@ -19,5 +19,6 @@ namespace InventoryManagement.Core.Entities
         [Required]
         public Guid CategoryId { get; set; }
         public Category? Category { get; set; }
+        public Inventory? Inventory { get; set; }
     }
 }
