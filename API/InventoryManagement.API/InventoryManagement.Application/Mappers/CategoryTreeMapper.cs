@@ -12,6 +12,7 @@ namespace InventoryManagement.Application.Mappers
     {
         public static CategoryTreeDTO MapSubCategory(Category subCategory, IEnumerable<Category> allCategories)
         {
+            //allCategories --> categoryRepository.GetAllAsync();
             //چون ما در ریپازیتوری کل دسته بندی هارو گرفتیم دیگه فرقی نداره که دسته بندی ای که داریم روش مپینگ انجام میدیم چه سطحی هست 
             //در ریپازیتوریمون دستور اینکلود که نوشتیم هر دسته بندی ای با هر سطحی رو که داشته باشیم میگیره و محصولاتش رو هم بهش میچسبونه
             //در این متد فقط با استفاده از آی دی دسته بندی والد ارتباطشون رو مرتب میکنیم

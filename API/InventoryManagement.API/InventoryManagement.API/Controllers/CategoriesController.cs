@@ -34,5 +34,12 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new GetCategoryByIdQuery(categoryId));
             return Ok(result);
         }
+        //PUT : {apiBaseUrl}/api/categories/{categoryId}
+        [HttpPut("{categoryId:guid}")]
+        public async Task<IActionResult> UpdateCategory([FromRoute] Guid categoryId, [FromBody] UpdateCategoryRequestDTO newCategoryData)
+        {
+            var result = await mediator.Send(new UpdateCategoryCommand(categoryId, newCategoryData));
+            return Ok(result);
+        }
     }
 }

@@ -40,5 +40,17 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .Include(c => c.ParentCategory)
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
+
+        public async Task<bool> UpdateAsync(Guid id, Category updatedCategory)
+        {
+            var categoryFound = await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            if (categoryFound != null)
+            {
+                context.Categories.Entry(categoryFound).CurrentValues.SetValues(updatedCategory);
+                await context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }
