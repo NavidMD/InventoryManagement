@@ -26,6 +26,7 @@ namespace InventoryManagement.Infrastructure.Repositories
             return category;
         }
 
+
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             return await context.Categories
@@ -41,16 +42,23 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<bool> UpdateAsync(Guid id, Category updatedCategory)
+        public async Task<Category?> UpdateAsync(Guid id, Category updatedCategory)
         {
-            var categoryFound = await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
-            if (categoryFound != null)
+            var categoryFoundForUpdate = await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            if (categoryFoundForUpdate != null)
             {
-                context.Categories.Entry(categoryFound).CurrentValues.SetValues(updatedCategory);
+                categoryFoundForUpdate.Title = updatedCategory.Title;
                 await context.SaveChangesAsync();
-                return true;
+                return categoryFoundForUpdate;
             }
-            return false;
+            return null;
+        }
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var rowDeleted = await context.Categories
+                .Where(c => c.Id == id)
+                .ExecuteDeleteAsync();
+            return rowDeleted > 0;
         }
     }
 }

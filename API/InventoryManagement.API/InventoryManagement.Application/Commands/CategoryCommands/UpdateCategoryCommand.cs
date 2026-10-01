@@ -1,4 +1,4 @@
-﻿using InventoryManagement.Application.DTOs.CommandDTOs;
+﻿using InventoryManagement.Application.DTOs.CommandDTOs.CategoryCommandDTOs;
 using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Interfaces.IRepositories;
 using MediatR;
@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Application.Commands.CategoryCommands
 {
-    public record UpdateCategoryCommand(Guid id, UpdateCategoryRequestDTO updatedCategory) : IRequest<bool>;
-    public class UpdateCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<UpdateCategoryCommand, bool>
+    public record UpdateCategoryCommand(Guid id, UpdateCategoryRequestDTO updatedCategory) : IRequest<UpdateCategoryResponseDTO>;
+    public class UpdateCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<UpdateCategoryCommand, UpdateCategoryResponseDTO>
     {
-        public async Task<bool> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateCategoryResponseDTO> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             var newCategory = new Category()
             {
@@ -21,11 +21,15 @@ namespace InventoryManagement.Application.Commands.CategoryCommands
                 Title = request.updatedCategory.Title
             };
             var response = await categoryRepository.UpdateAsync(request.id, newCategory);
-            if(response != true)
+            if(response == null)
             {
-                throw new KeyNotFoundException("دسته بندی بندی با این کلید جهت ویرایش یافت نشد!");
+                throw new KeyNotFoundException("دسته بندی با این شناسه جهت ویرایش یافت نشد!");
             }
-            return response;
+            return new UpdateCategoryResponseDTO()
+            {
+                Id = response.Id,
+                Title = response.Title,
+            };
         }
     }
 }

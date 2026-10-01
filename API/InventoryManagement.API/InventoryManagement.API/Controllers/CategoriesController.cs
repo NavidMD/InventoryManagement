@@ -1,5 +1,5 @@
 ﻿using InventoryManagement.Application.Commands.CategoryCommands;
-using InventoryManagement.Application.DTOs.CommandDTOs;
+using InventoryManagement.Application.DTOs.CommandDTOs.CategoryCommandDTOs;
 using InventoryManagement.Application.DTOs.QueryDTOs;
 using InventoryManagement.Application.DTOs.QueryDTOs.GetAllCategories;
 using InventoryManagement.Application.Queries;
@@ -18,7 +18,7 @@ namespace InventoryManagement.API.Controllers
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDTO request)
         {
             var result = await mediator.Send(new CreateCategoryCommand(request));
-            return Ok(result);
+            return CreatedAtAction(nameof(GetCategoryById), new { categoryId = result.Id }, result);
         }
         //GET : {apiBaseUrl}/api/categories
         [HttpGet]
@@ -40,6 +40,13 @@ namespace InventoryManagement.API.Controllers
         {
             var result = await mediator.Send(new UpdateCategoryCommand(categoryId, newCategoryData));
             return Ok(result);
+        }
+        //DELETE : {apiBaseUrl}/api/categories/{categoryId}
+        [HttpDelete("{categoryId:guid}")]
+        public async Task<IActionResult> DeleteCategory([FromRoute] Guid categoryId)
+        {
+            var result = await mediator.Send(new DeleteCategoryCommand(categoryId));
+            return Ok($"دسته بندی با شناسه {categoryId} حذف گردید");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Application.DTOs.CommandDTOs
+namespace InventoryManagement.Application.DTOs.CommandDTOs.CategoryCommandDTOs
 {
     public class CreateCategoryResponseDTO
     {

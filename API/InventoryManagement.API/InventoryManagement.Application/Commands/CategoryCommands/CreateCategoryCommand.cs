@@ -1,4 +1,4 @@
-﻿using InventoryManagement.Application.DTOs.CommandDTOs;
+﻿using InventoryManagement.Application.DTOs.CommandDTOs.CategoryCommandDTOs;
 using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Interfaces.IRepositories;
 using MediatR;
