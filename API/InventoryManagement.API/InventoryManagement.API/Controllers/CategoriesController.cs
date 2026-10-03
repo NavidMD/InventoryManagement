@@ -1,8 +1,7 @@
 ﻿using InventoryManagement.Application.Commands.CategoryCommands;
 using InventoryManagement.Application.DTOs.CommandDTOs.CategoryCommandDTOs;
-using InventoryManagement.Application.DTOs.QueryDTOs;
-using InventoryManagement.Application.DTOs.QueryDTOs.GetAllCategories;
-using InventoryManagement.Application.Queries;
+using InventoryManagement.Application.DTOs.QueryDTOs.CategoryQueryDTOs;
+using InventoryManagement.Application.Queries.CategoryQueries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

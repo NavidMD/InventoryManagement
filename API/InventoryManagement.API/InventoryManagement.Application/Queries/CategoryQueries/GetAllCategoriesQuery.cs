@@ -1,5 +1,5 @@
-﻿using InventoryManagement.Application.DTOs.QueryDTOs.DefaultDTOs;
-using InventoryManagement.Application.DTOs.QueryDTOs.GetAllCategories;
+﻿using InventoryManagement.Application.DTOs.QueryDTOs.CategoryQueryDTOs;
+using InventoryManagement.Application.DTOs.QueryDTOs.DefaultDTOs;
 using InventoryManagement.Application.Mappers;
 using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Interfaces.IRepositories;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Application.Queries
+namespace InventoryManagement.Application.Queries.CategoryQueries
 {
     public record GetAllCategoriesQuery(): IRequest<IEnumerable<GetAllCategoriesResponseDTO>>;
     public class GetAllCategoriesQueryHandler(ICategoryRepository categoryRepository) : IRequestHandler<GetAllCategoriesQuery, IEnumerable<GetAllCategoriesResponseDTO>>

@@ -1,5 +1,5 @@
-﻿using InventoryManagement.Application.DTOs.QueryDTOs.DefaultDTOs;
-using InventoryManagement.Application.DTOs.QueryDTOs.GetCategoryById;
+﻿using InventoryManagement.Application.DTOs.QueryDTOs.CategoryQueryDTOs;
+using InventoryManagement.Application.DTOs.QueryDTOs.DefaultDTOs;
 using InventoryManagement.Application.Mappers;
 using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Interfaces.IRepositories;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Application.Queries
+namespace InventoryManagement.Application.Queries.CategoryQueries
 {
     public record GetCategoryByIdQuery(Guid id) : IRequest<GetCategoryByIdResponseDTO>;
     public class GetCategoryByIdQueryHandler(ICategoryRepository categoryRepository) : IRequestHandler<GetCategoryByIdQuery, GetCategoryByIdResponseDTO>
