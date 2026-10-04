@@ -36,7 +36,7 @@ namespace InventoryManagement.API.Controllers
         [HttpGet("{departmentId:guid}")]
         public async Task<IActionResult> GetDepartmentById([FromRoute] Guid departmentId)
         {
-            var result = await mediator.Send(new GetDepartmentByIdQuery(departmentId)));
+            var result = await mediator.Send(new GetDepartmentByIdQuery(departmentId));
             return Ok(result);
         }
     }
