@@ -2,6 +2,8 @@
 using InventoryManagement.Application.DTOs.CommandDTOs.DepartmentCommandDTOs;
 using InventoryManagement.Application.DTOs.QueryDTOs.DepartmentQueryDTOs;
 using InventoryManagement.Application.Queries.DepartmentQueries;
+using InventoryManagement.Core.Entities;
+
 
 
 //using InventoryManagement.Application.DTOs.QueryDTOs.DepartmentQueryDTOs;
@@ -39,5 +41,20 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new GetDepartmentByIdQuery(departmentId));
             return Ok(result);
         }
+        //PUT : {apiBaseUrl}/api/departments/{departmentId}
+        [HttpPut("{departmentId:guid}")]
+        public async Task<IActionResult> UpdateDepartment([FromRoute] Guid departmentId, [FromBody] UpdateDepartmentRequestDTO newDepartmentData)
+        {
+            var result = await mediator.Send(new UpdateDepartmentCommand(departmentId, newDepartmentData));
+            return Ok(result);
+        }
+        //DELETE : {apiBaseUrl}/api/departments/{departmentId}
+        [HttpDelete("{departmentId:guid}")]
+        public async Task<IActionResult> DeleteDepartment([FromRoute] Guid departmentId)
+        {
+            var result = await mediator.Send(new DeleteDepartmentCommand(departmentId));
+            return Ok($"دپارتمان با شناسه {departmentId} حذف گردید");
+        }
+
     }
 }

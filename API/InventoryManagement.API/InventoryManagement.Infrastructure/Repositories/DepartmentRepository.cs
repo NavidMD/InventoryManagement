@@ -19,16 +19,19 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
             this.context = context;
         }
+
         public async Task<Department> CreateAsync(Department department)
         {
             context.Departments.Add(department);
             await context.SaveChangesAsync();
             return department;
         }
+
         public async Task<IEnumerable<Department>> GetAllAsync()
         {
             return await context.Departments.Include(d => d.Employees).ToListAsync();
         }
+
         public async Task<Department?> GetByIdAsync(Guid id)
         {
             return await context.Departments
@@ -36,15 +39,24 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .FirstOrDefaultAsync(d => d.Id == id);
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<Department?> UpdateAsync(Guid id, Department updatedDepartment)
         {
-            throw new NotImplementedException();
+            var departmentFoundForUpdate = await context.Departments.FirstOrDefaultAsync(d => d.Id == id);
+            if (departmentFoundForUpdate != null)
+            {
+                departmentFoundForUpdate.Title = updatedDepartment.Title;
+                await context.SaveChangesAsync();
+                return departmentFoundForUpdate;
+            }
+            return null;
         }
 
-
-        public Task<Department?> UpdateAsync(Guid id, Department updatedDepartment)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var rowDeleted = await context.Departments
+                .Where(d => d.Id == id)
+                .ExecuteDeleteAsync();
+            return rowDeleted > 0;
         }
     }
 }
