@@ -1,5 +1,9 @@
 ﻿using InventoryManagement.Application.Commands.DepartmentCommands;
 using InventoryManagement.Application.DTOs.CommandDTOs.DepartmentCommandDTOs;
+using InventoryManagement.Application.DTOs.QueryDTOs.DepartmentQueryDTOs;
+using InventoryManagement.Application.Queries.DepartmentQueries;
+
+
 //using InventoryManagement.Application.DTOs.QueryDTOs.DepartmentQueryDTOs;
 //using InventoryManagement.Application.Queries.DepartmentQueries;
 using MediatR;
@@ -14,17 +18,26 @@ namespace InventoryManagement.API.Controllers
     public class DepartmentsController(IMediator mediator) : ControllerBase
     {
         //POST : {apiBaseUrl}/api/departments/createdepartment
-        [HttpPost]
+        [HttpPost("createdepartment")]
         public async Task<IActionResult> CreateDepartment([FromBody] CreateDepartmentRequestDTO request)
         {
             var result = await mediator.Send(new CreateDepartmentCommand(request));
-            //return CreatedAtAction(nameof(GetDepartmentById),new { departmentId = result.Id }, result);
-            return Created($"/api/departments/${result.Id}", result);
+            return CreatedAtAction(nameof(GetDepartmentById),new { departmentId = result.Id }, result);
         }
-
-        private object GetDepartmentById()
+        //GET : {apiBaseUrl}/api/departments
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<GetAllDepartmentsResponseDTO>>> GetAllDepartments()
         {
-            throw new NotImplementedException();
+            var result = await mediator.Send(new GetAllDepartmentsQuery());
+            return Ok(result);
+        }
+        //GET : {apiBaseUrl}/api/departments/{departmentId}
+        //Route Constraint ==> this route is accessible only if departmentId is convertable to Guid
+        [HttpGet("{departmentId:guid}")]
+        public async Task<IActionResult> GetDepartmentById([FromRoute] Guid departmentId)
+        {
+            var result = await mediator.Send(new GetDepartmentByIdQuery(departmentId)));
+            return Ok(result);
         }
     }
 }

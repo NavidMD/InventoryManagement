@@ -24,8 +24,6 @@
     <Folder Include="DTOs\CommandDTOs\ReceiptItemCommandDTOs\" />
     <Folder Include="DTOs\CommandDTOs\ReceiptCommandDTOs\" />
     <Folder Include="DTOs\CommandDTOs\ProductCommandDTOs\" />
-    <Folder Include="DTOs\QueryDTOs\DepartmentQueryDTOs\" />
-    <Folder Include="Queries\DepartmentQueries\" />
   </ItemGroup>
 
 </Project>
