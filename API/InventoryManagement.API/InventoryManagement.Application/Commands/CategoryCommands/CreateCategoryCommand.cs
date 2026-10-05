@@ -22,12 +22,11 @@ namespace InventoryManagement.Application.Commands.CategoryCommands
                 ParentCategoryId = request.category.ParentCategoryId,
             };
             var result = await categoryRepository.CreateAsync(newCategory);
-
             return new CreateCategoryResponseDTO()
             {
                 Id = result.Id,
                 Title = result.Title,
-                ParentCategoryId = result.ParentCategoryId
+                ParentCategoryId = result.ParentCategoryId,
             };
         }
     }

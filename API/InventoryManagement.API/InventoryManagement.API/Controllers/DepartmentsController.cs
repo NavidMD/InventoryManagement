@@ -3,11 +3,6 @@ using InventoryManagement.Application.DTOs.CommandDTOs.DepartmentCommandDTOs;
 using InventoryManagement.Application.DTOs.QueryDTOs.DepartmentQueryDTOs;
 using InventoryManagement.Application.Queries.DepartmentQueries;
 using InventoryManagement.Core.Entities;
-
-
-
-//using InventoryManagement.Application.DTOs.QueryDTOs.DepartmentQueryDTOs;
-//using InventoryManagement.Application.Queries.DepartmentQueries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -55,6 +50,5 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new DeleteDepartmentCommand(departmentId));
             return Ok($"دپارتمان با شناسه {departmentId} حذف گردید");
         }
-
     }
 }

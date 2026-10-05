@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddProjectDI(builder.Configuration);
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 
 var app = builder.Build();

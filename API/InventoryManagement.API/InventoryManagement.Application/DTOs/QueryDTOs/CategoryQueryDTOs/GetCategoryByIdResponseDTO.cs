@@ -14,6 +14,7 @@ namespace InventoryManagement.Application.DTOs.QueryDTOs.CategoryQueryDTOs
         public string Title { get; set; } = string.Empty;
         public ICollection<CategoryProductsDTO> Products { get; set; } = new List<CategoryProductsDTO>();
         public Guid? ParentCategoryId { get; set; }
+        public string? ParentCategoryTitle { get; set; }
         public ICollection<CategoryTreeDTO> SubCategories { get; set; } = new List<CategoryTreeDTO>();
     } 
 }

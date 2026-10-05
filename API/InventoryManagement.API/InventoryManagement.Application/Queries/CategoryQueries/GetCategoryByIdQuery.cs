@@ -33,6 +33,7 @@ namespace InventoryManagement.Application.Queries.CategoryQueries
                         SerialNumber = product.SerialNumber
                     }).ToList(),
                     ParentCategoryId = categoryFoundedById.ParentCategoryId,
+                    ParentCategoryTitle = categoryFoundedById.ParentCategory?.Title,
                     SubCategories = allCategories
                         .Where(c => c.ParentCategoryId == categoryFoundedById.Id)
                         .Select(subCategory => CategoryTreeMapper.MapSubCategory(subCategory, allCategories))
