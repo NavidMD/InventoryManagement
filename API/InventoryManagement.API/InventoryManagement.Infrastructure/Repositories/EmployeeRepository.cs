@@ -43,18 +43,21 @@ namespace InventoryManagement.Infrastructure.Repositories
             var employeeFoundForUpdate = await context.Employees.FirstOrDefaultAsync(e => e.Id == id);
             if (employeeFoundForUpdate != null)
             {
-                context.Employees.Entry(employeeFoundForUpdate).CurrentValues.SetValues(updatedEmployee);
+                employeeFoundForUpdate.FirstName = updatedEmployee.FirstName;
+                employeeFoundForUpdate.LastName = updatedEmployee.LastName;
+                employeeFoundForUpdate.PersonnelCode = updatedEmployee.PersonnelCode;
                 await context.SaveChangesAsync();
                 return employeeFoundForUpdate;
             }
             return null;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var rowsDeleted = await context.Employees
+                .Where(e => e.Id == id)
+                .ExecuteDeleteAsync();
+            return rowsDeleted > 0;
         }
-
-
     }
 }

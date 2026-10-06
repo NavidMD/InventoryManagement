@@ -40,5 +40,12 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new UpdateEmployeeCommand(employeeId, newEmployeeData));
             return Ok(result);
         }
+        //DELETE : {apibaseurl}/api/employees/{employeeId}
+        [HttpDelete("{employeeId:guid}")]
+        public async Task<IActionResult> DeleteEmployee([FromRoute] Guid employeeId)
+        {
+            var result = await mediator.Send(new DeleteEmployeeCommand(employeeId));
+            return Ok(result);
+        }
     }
 }
