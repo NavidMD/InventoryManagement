@@ -17,14 +17,19 @@ namespace InventoryManagement.API.Controllers
         public async Task<IActionResult> AddEmployee([FromBody] CreateEmployeeRequestDTO requset)
         {
             var result = await mediator.Send(new CreateEmployeeCommand(requset));
-            //return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = result.Id }, result);
-            return Ok(result);
+            return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = result.Id }, result);
         }
         //GET : {apibaseurl}/api/employees
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetAllEmployeesResponseDTO>>> GetAllEmployees()
         {
             var result = await mediator.Send(new GetAllEmployeesQuery());
+            return Ok(result);
+        }
+        //GET : {apibaseurl}/api/employees/{employeeId}
+        public async Task<IActionResult> GetEmployeeById([FromRoute] Guid employeeId)
+        {
+            var result = await mediator.Send(new GetEmployeeByIdQuery(employeeId));
             return Ok(result);
         }
 

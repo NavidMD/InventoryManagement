@@ -18,15 +18,24 @@ namespace InventoryManagement.Infrastructure.Repositories
         {
             this.context = context;
         }
+
         public async Task<Employee> CreateAsync(Employee employee)
         {
             context.Employees.Add(employee);
             await context.SaveChangesAsync();
             return employee;
         }
+
         public async Task<IEnumerable<Employee>> GetAllAsync()
         {
             return await context.Employees.Include(e => e.Department).ToListAsync();
+        }
+
+        public async Task<Employee?> GetByIdAsync(Guid id)
+        {
+            return await context.Employees
+                .Include(e => e.Department)
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public Task<bool> DeleteAsync(Guid id)
@@ -35,10 +44,6 @@ namespace InventoryManagement.Infrastructure.Repositories
         }
 
 
-        public Task<Employee?> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<Employee?> UpdateAsync(Guid id, Employee updatedEmployee)
         {

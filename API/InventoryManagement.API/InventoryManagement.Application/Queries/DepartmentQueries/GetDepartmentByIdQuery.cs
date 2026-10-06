@@ -15,14 +15,14 @@ namespace InventoryManagement.Application.Queries.DepartmentQueries
     {
         public async Task<GetDepartmentByIdResponseDTO> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
         {
-            var foundedDepartment = await departmentRepository.GetByIdAsync(request.departmentId);
-            if (foundedDepartment != null)
+            var foundDepartment = await departmentRepository.GetByIdAsync(request.departmentId);
+            if (foundDepartment != null)
             {
                 return new GetDepartmentByIdResponseDTO()
                 {
-                    Id = foundedDepartment.Id,
-                    Title = foundedDepartment.Title,
-                    Employees = foundedDepartment.Employees.Select(e => new DepartmentEmployeesDTO()
+                    Id = foundDepartment.Id,
+                    Title = foundDepartment.Title,
+                    Employees = foundDepartment.Employees.Select(e => new DepartmentEmployeesDTO()
                     {
                         Id = e.Id,
                         FirstName = e.FirstName,

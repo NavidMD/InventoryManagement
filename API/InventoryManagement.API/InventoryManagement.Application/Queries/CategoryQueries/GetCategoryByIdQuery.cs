@@ -19,23 +19,23 @@ namespace InventoryManagement.Application.Queries.CategoryQueries
         {
             //recursive CTE تغییر این بخش به
             var allCategories = await categoryRepository.GetAllAsync();
-            var categoryFoundedById = await categoryRepository.GetByIdAsync(request.id);
-            if (categoryFoundedById != null)
+            var categoryFoundById = await categoryRepository.GetByIdAsync(request.id);
+            if (categoryFoundById != null)
             {
                 var response = new GetCategoryByIdResponseDTO()
                 {
-                    Id = categoryFoundedById.Id,
-                    Title = categoryFoundedById.Title,
-                    Products = categoryFoundedById.Products.Select(product => new CategoryProductsDTO()
+                    Id = categoryFoundById.Id,
+                    Title = categoryFoundById.Title,
+                    Products = categoryFoundById.Products.Select(product => new CategoryProductsDTO()
                     {
                         Id = product.Id,
                         Title = product.Title,
                         SerialNumber = product.SerialNumber
                     }).ToList(),
-                    ParentCategoryId = categoryFoundedById.ParentCategoryId,
-                    ParentCategoryTitle = categoryFoundedById.ParentCategory?.Title,
+                    ParentCategoryId = categoryFoundById.ParentCategoryId,
+                    ParentCategoryTitle = categoryFoundById.ParentCategory?.Title,
                     SubCategories = allCategories
-                        .Where(c => c.ParentCategoryId == categoryFoundedById.Id)
+                        .Where(c => c.ParentCategoryId == categoryFoundById.Id)
                         .Select(subCategory => CategoryTreeMapper.MapSubCategory(subCategory, allCategories))
                         .ToList()
                 };
