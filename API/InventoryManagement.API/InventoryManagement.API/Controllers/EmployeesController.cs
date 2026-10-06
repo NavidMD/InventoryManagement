@@ -27,11 +27,18 @@ namespace InventoryManagement.API.Controllers
             return Ok(result);
         }
         //GET : {apibaseurl}/api/employees/{employeeId}
+        [HttpGet("{employeeId:guid}")]
         public async Task<IActionResult> GetEmployeeById([FromRoute] Guid employeeId)
         {
             var result = await mediator.Send(new GetEmployeeByIdQuery(employeeId));
             return Ok(result);
         }
-
+        //PUT : {apibaseurl}/api/employees/{employeeId}
+        [HttpPut("{employeeId:guid}")]
+        public async Task<IActionResult> UpdateEmployee([FromRoute] Guid employeeId, [FromBody] UpdateEmployeeRequestDTO newEmployeeData)
+        {
+            var result = await mediator.Send(new UpdateEmployeeCommand(employeeId, newEmployeeData));
+            return Ok(result);
+        }
     }
 }

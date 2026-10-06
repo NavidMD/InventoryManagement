@@ -38,16 +38,23 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
+        public async Task<Employee?> UpdateAsync(Guid id, Employee updatedEmployee)
+        {
+            var employeeFoundForUpdate = await context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            if (employeeFoundForUpdate != null)
+            {
+                context.Employees.Entry(employeeFoundForUpdate).CurrentValues.SetValues(updatedEmployee);
+                await context.SaveChangesAsync();
+                return employeeFoundForUpdate;
+            }
+            return null;
+        }
+
         public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
 
-
-        public Task<Employee?> UpdateAsync(Guid id, Employee updatedEmployee)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
