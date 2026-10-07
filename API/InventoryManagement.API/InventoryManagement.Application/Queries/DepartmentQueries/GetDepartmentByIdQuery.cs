@@ -32,7 +32,7 @@ namespace InventoryManagement.Application.Queries.DepartmentQueries
                     }).ToList()
                 };
             }
-            throw new KeyNotFoundException("دپارتمان مورد نظر یافت نشد!");
+            throw new KeyNotFoundException("دپارتمانی با این شناسه یافت نشد!");
         }
     }
 }

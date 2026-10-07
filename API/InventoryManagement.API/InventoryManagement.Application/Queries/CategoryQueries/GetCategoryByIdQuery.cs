@@ -41,7 +41,7 @@ namespace InventoryManagement.Application.Queries.CategoryQueries
                 };
                 return response;
             }
-            throw new KeyNotFoundException("دسته بندی مورد نظر یافت نشد!");
+            throw new KeyNotFoundException("دسته بندی با این شناسه یافت نشد!");
         }
     }
 }

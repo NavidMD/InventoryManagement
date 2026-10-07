@@ -17,11 +17,9 @@
 
   <ItemGroup>
     <Folder Include="Commands\ReceiptCommands\" />
-    <Folder Include="Commands\ProductCommands\" />
     <Folder Include="DTOs\CommandDTOs\InventoryCommandDTOs\" />
     <Folder Include="DTOs\CommandDTOs\ReceiptItemCommandDTOs\" />
     <Folder Include="DTOs\CommandDTOs\ReceiptCommandDTOs\" />
-    <Folder Include="DTOs\CommandDTOs\ProductCommandDTOs\" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,6 @@ namespace InventoryManagement.Application.DTOs.QueryDTOs.CategoryQueryDTOs
 {
     public class GetCategoryByIdResponseDTO
     {
-
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public ICollection<CategoryProductsDTO> Products { get; set; } = new List<CategoryProductsDTO>();
