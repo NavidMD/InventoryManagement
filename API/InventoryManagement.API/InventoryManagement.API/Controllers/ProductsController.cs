@@ -37,5 +37,12 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new GetProductByIdQuery(productId));
             return Ok(result);
         }
+        //PUT : {apibaseurl}/api/products/{productId}
+        [HttpPut("{productId:guid}")]
+        public async Task<IActionResult> UpdateProduct([FromRoute] Guid productId, [FromBody] UpdateProductRequestDTO newProductData)
+        {
+            var result = await mediator.Send(new UpdateProductCommand(productId, newProductData));
+            return Ok(result);
+        }
     }
 }

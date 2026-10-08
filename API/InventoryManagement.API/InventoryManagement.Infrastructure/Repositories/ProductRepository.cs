@@ -41,14 +41,25 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<Product?> UpdateAsync(Guid id, Product updatedProduct)
         {
-            throw new NotImplementedException();
+            var productFoundForUpdate = await context.Products
+                .Include(p => p.Inventory)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (productFoundForUpdate != null)
+            {
+                productFoundForUpdate.Title = updatedProduct.Title;
+                productFoundForUpdate.SerialNumber = updatedProduct.SerialNumber;
+                productFoundForUpdate.CategoryId = updatedProduct.CategoryId;
+                productFoundForUpdate.Inventory!.StorageBalance = updatedProduct.Inventory!.StorageBalance;
+                await context.SaveChangesAsync();
+                return productFoundForUpdate;
+            }
+            return null;
         }
 
-
-
-        public Task<Product?> UpdateAsync(Guid id, Product updatedProduct)
+        public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
