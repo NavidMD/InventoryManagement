@@ -59,9 +59,12 @@ namespace InventoryManagement.Infrastructure.Repositories
             return null;
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var rowsDeleted = await context.Products
+                .Where(p => p.Id == id)
+                .ExecuteDeleteAsync();
+            return rowsDeleted > 0;
         }
     }
 }

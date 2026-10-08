@@ -44,5 +44,12 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new UpdateProductCommand(productId, newProductData));
             return Ok(result);
         }
+        //DELETE : {apibaseurl}/api/products/{productId}
+        [HttpDelete("{productId:guid}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] Guid productId)
+        {
+            var result = await mediator.Send(new DeleteProductCommand(productId));
+            return Ok(result);
+        }
     }
 }
