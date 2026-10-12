@@ -14,7 +14,7 @@ namespace InventoryManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController(IMediator mediator) : ControllerBase
+    public class ProductsController(IMediator mediator, ILogger<ProductsController> logger) : ControllerBase
     {
         //POST : {apibaseurl}/api/products/addproduct
         [HttpPost("addproduct")]

@@ -46,6 +46,8 @@ namespace InventoryManagement.Infrastructure.Repositories
                 employeeFoundForUpdate.FirstName = updatedEmployee.FirstName;
                 employeeFoundForUpdate.LastName = updatedEmployee.LastName;
                 employeeFoundForUpdate.PersonnelCode = updatedEmployee.PersonnelCode;
+                employeeFoundForUpdate.PhoneNumber = updatedEmployee.PhoneNumber;
+                employeeFoundForUpdate.EmailAddress = updatedEmployee.EmailAddress;
                 await context.SaveChangesAsync();
                 return employeeFoundForUpdate;
             }
@@ -58,6 +60,12 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .Where(e => e.Id == id)
                 .ExecuteDeleteAsync();
             return rowsDeleted > 0;
+        }
+
+        public async Task<Employee?> GetByPersonnelCode(string personnelCode, CancellationToken cancellationToken)
+        {
+            return await context.Employees
+                .FirstOrDefaultAsync(e => e.PersonnelCode == personnelCode);
         }
     }
 }

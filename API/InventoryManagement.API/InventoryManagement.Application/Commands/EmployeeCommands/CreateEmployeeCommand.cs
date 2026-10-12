@@ -21,7 +21,9 @@ namespace InventoryManagement.Application.Commands.EmployeeCommands
                 FirstName = request.newEmployee.FirstName,
                 LastName = request.newEmployee.LastName,
                 PersonnelCode = request.newEmployee.PersonnelCode,
-                DepartmentId = request.newEmployee.DepartmentId
+                PhoneNumber = request.newEmployee.PhoneNumber,
+                DepartmentId = request.newEmployee.DepartmentId,
+                EmailAddress = request.newEmployee.EmailAddress,
             };
             var response = await employeeRepository.CreateAsync(employee);
             return new CreateEmployeeResponseDTO()
@@ -30,7 +32,9 @@ namespace InventoryManagement.Application.Commands.EmployeeCommands
                 FirstName = response.FirstName,
                 LastName = response.LastName,
                 PersonnelCode = response.PersonnelCode,
+                PhoneNumber = response.PhoneNumber,
                 DepartmentId = response.DepartmentId,
+                EmailAddress = response.EmailAddress
             };
         }
     }

@@ -14,7 +14,9 @@ namespace InventoryManagement.Application.DTOs.QueryDTOs.EmployeeQueryDTOs
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string PersonnelCode { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
         public Guid DepartmentId { get; set; }
         public string DepartmentTitle { get; set; } = string.Empty;
+        public string EmailAddress { get; set; } = string.Empty;
     }
 }

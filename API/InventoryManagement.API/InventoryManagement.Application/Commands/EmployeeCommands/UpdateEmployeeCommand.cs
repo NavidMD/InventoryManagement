@@ -21,7 +21,9 @@ namespace InventoryManagement.Application.Commands.EmployeeCommands
                 Id = request.employeeId,
                 FirstName = request.updatedEmployee.FirstName,
                 LastName = request.updatedEmployee.LastName,
-                PersonnelCode = request.updatedEmployee.PersonnelCode
+                PhoneNumber = request.updatedEmployee.PhoneNumber,
+                PersonnelCode = request.updatedEmployee.PersonnelCode,
+                EmailAddress = request.updatedEmployee.EmailAddress
             };
             var response = await employeeRepository.UpdateAsync(request.employeeId, newEmployee);
             if (response == null)
@@ -33,7 +35,9 @@ namespace InventoryManagement.Application.Commands.EmployeeCommands
                 Id = response.Id,
                 FirstName = response.FirstName,
                 LastName = response.LastName,
-                PersonnelCode = response.PersonnelCode
+                PersonnelCode = response.PersonnelCode,
+                PhoneNumber = response.PhoneNumber,
+                EmailAddress = response.EmailAddress
             };
         }
     }

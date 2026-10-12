@@ -12,6 +12,7 @@ namespace InventoryManagement.Core.Interfaces.IRepositories
         Task<Employee> CreateAsync(Employee employee);
         Task<IEnumerable<Employee>> GetAllAsync();
         Task<Employee?> GetByIdAsync(Guid id);
+        Task<Employee?> GetByPersonnelCode(string personnelCode, CancellationToken cancellationToken);
         Task<Employee?> UpdateAsync(Guid id, Employee updatedEmployee);
         Task<bool> DeleteAsync(Guid id);
     }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace InventoryManagement.Infrastructure
 {
@@ -19,6 +20,13 @@ namespace InventoryManagement.Infrastructure
             {
                 options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
             });
+            services.AddDbContext<AuthDbContext>((provider, options) =>
+            {
+                options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.IdentityConnection);
+            });
+            //Identity Configurations
+            services.AddIdentityApiEndpoints<IdentityUser>()
+                .AddEntityFrameworkStores<AuthDbContext>();
             return services;
         }
     }

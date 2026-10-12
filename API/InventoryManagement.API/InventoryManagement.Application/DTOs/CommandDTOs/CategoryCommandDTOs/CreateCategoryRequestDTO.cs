@@ -9,8 +9,6 @@ namespace InventoryManagement.Application.DTOs.CommandDTOs.CategoryCommandDTOs
 {
     public class CreateCategoryRequestDTO
     {
-        [Required]
-        [MaxLength(50)]
         public string Title { get; set; } = string.Empty;
         public Guid? ParentCategoryId { get; set; }
     }

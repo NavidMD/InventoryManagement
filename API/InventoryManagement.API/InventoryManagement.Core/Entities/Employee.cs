@@ -19,6 +19,11 @@ namespace InventoryManagement.Core.Entities
         [StringLength(12)]
         public string PersonnelCode { get; set; } = string.Empty;
         [Required]
+        [MaxLength(12)]
+        public string PhoneNumber { get; set; } = string.Empty;
+        [EmailAddress]
+        public string EmailAddress { get; set; } = string.Empty;
+        [Required]
         public Guid DepartmentId { get; set; }
         public Department? Department { get; set; }
         public ICollection<Receipt>? Receipts { get; set; }

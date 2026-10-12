@@ -23,6 +23,7 @@ namespace InventoryManagement.Application.Queries.EmployeeQueries
                     FirstName = foundEmployee.FirstName,
                     LastName = foundEmployee.LastName,
                     PersonnelCode = foundEmployee.PersonnelCode,
+                    PhoneNumber = foundEmployee.PhoneNumber,
                     DepartmentId = foundEmployee.DepartmentId,
                     DepartmentTitle = foundEmployee.Department!.Title
                 };
