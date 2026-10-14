@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 namespace InventoryManagement.Application.Commands.AuthCommands
 {
     public record LoginUserCommand(LoginRequestDTO loginData) : IRequest<LoginResponseDTO>;
-    public class LoginUserCommandHandler(IEmployeeRepository employeeRepository, IOtpService otpService, IEmailService emailService) : IRequestHandler<LoginUserCommand, LoginResponseDTO>
+    public class LoginUserCommandHandler(IEmployeeRepository employeeRepository, IOtpService otpService, IOtpRepository otpRepository, IEmailService emailService) : IRequestHandler<LoginUserCommand, LoginResponseDTO>
     {
         public async Task<LoginResponseDTO> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             //finding employee by personnel code and checking input email with employee email
             var employeeFoundByPersonnelCode = await employeeRepository.GetByPersonnelCode(request.loginData.PersonnelCode, cancellationToken);
-            
+
             if (employeeFoundByPersonnelCode == null ||
                 !String.Equals(employeeFoundByPersonnelCode.EmailAddress.Trim(),
                     request.loginData.EmailAddress.Trim(),
@@ -31,13 +31,45 @@ namespace InventoryManagement.Application.Commands.AuthCommands
                     Message = "اطلاعات وارد شده معتبر نمی باشد!"
                 };
             }
-            //generating otp
-            var otp = otpService.GenerateOtp();
+            //checking database to see if there is an Active otp for this user
+            var activeOtp = await otpRepository.GetActiveOtpByEmployeeIdAsync(employeeFoundByPersonnelCode.Id);
+            if (activeOtp != null)
+            {
+                var otpExpired = await otpService.CheckOtpExpiration(activeOtp.Id);
+                if (otpExpired)
+                {
+                    //updating otp : deactivating expired otp
+                    var deactivatedOtp = new OtpModel()
+                    {
+                        Id = activeOtp.Id,
+                        IsActive = false,
+                    };
+                    await otpRepository.UpdateAsync(activeOtp.Id, deactivatedOtp);
+                }
+                else
+                {
+                    return new LoginResponseDTO()
+                    {
+                        OtpRequired = true,
+                        Message = "کد ورود یکبار مصرف قبلا ارسال شده است!"
+                    };
+                }
+            }
+
+            //generating new active otp and adding to database
+            var newRawOtp = otpService.GenerateOtp();
+            var newOtpChallenge = new OtpModel
+            {
+                OtpHash = otpService.HashGeneratedOtp(newRawOtp),
+                EmployeeId = employeeFoundByPersonnelCode.Id,
+                IsActive = true
+            };
+            await otpRepository.CreateAsync(newOtpChallenge);
 
             //creating email message for sending 
             var message = new EmailModel()
             {
-                To = request.loginData.EmailAddress,
+                To = employeeFoundByPersonnelCode.EmailAddress,
                 Subject = "کد تایید ورود",
                 Body = $"""
                     <!DOCTYPE html>
@@ -79,7 +111,7 @@ namespace InventoryManagement.Application.Commands.AuthCommands
                                         <div dir="ltr"
                                              style="font-size:36px; font-weight:bold;
                                                     letter-spacing:8px; color:#155dfc;">
-                                            {otp}
+                                            {newRawOtp}
                                         </div>
                                     </div>
                                     <p style="font-size:14px; line-height:2;">

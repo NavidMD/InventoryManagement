@@ -23,7 +23,8 @@ namespace InventoryManagement.Application.Queries.EmployeeQueries
                 DepartmentId = e.DepartmentId,
                 PersonnelCode = e.PersonnelCode,
                 PhoneNumber = e.PhoneNumber,
-                DepartmentTitle = e.Department!.Title
+                DepartmentTitle = e.Department!.Title,
+                EmailAddress = e.EmailAddress
             }).ToList();
         }
     }
