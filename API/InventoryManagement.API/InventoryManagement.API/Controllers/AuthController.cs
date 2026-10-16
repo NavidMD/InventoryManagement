@@ -17,5 +17,13 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new LoginUserCommand(request));
             return Ok(result);
         }
+        //POST : {apibaseurl}/api/auth/verify-otp
+        [HttpPost("verify-otp")]
+        public async Task<IActionResult> VerifyOtp([FromBody] VertificationRequestDTO request)
+        {
+            var result = await mediator.Send(new VerifyOtpCommand(request));
+            return Ok(result);
+        }
+
     }
 }

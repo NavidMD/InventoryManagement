@@ -8,5 +8,6 @@ namespace InventoryManagement.Core.Interfaces.IServices
 {
     public interface IJwtService
     {
+        string GenerateToken();
     }
 }

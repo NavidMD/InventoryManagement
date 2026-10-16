@@ -34,7 +34,7 @@ namespace InventoryManagement.Infrastructure.Services
             var otp = await otpRepository.GetActiveOtpByIdAsync(otpId);
             if (otp is null)
             {
-                throw new KeyNotFoundException("OTP not found.");
+                throw new KeyNotFoundException("OTP not found");
             }
             return otp.ExpireTime <= DateTime.UtcNow;
         }

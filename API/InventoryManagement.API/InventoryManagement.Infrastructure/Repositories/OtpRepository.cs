@@ -33,6 +33,13 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .FirstOrDefaultAsync(otp => otp.EmployeeId == employeeId);
         }
 
+        public async Task<OtpModel?> GetActiveOtpByHashAsync(string hash)
+        {
+            return await authDbContext.OtpChallenges
+                .Where(o => o.IsActive == true)
+                .FirstOrDefaultAsync(o => o.OtpHash == hash);
+        }
+
         public async Task<OtpModel?> GetActiveOtpByIdAsync(Guid otpId)
         {
             return await authDbContext.OtpChallenges
@@ -45,7 +52,7 @@ namespace InventoryManagement.Infrastructure.Repositories
             var otpFoundForUpdate = await authDbContext.OtpChallenges.FirstOrDefaultAsync(o => o.Id  == otpId);
             if (otpFoundForUpdate != null)
             {
-                otpFoundForUpdate.IsActive = updatedOtp.IsActive;
+                authDbContext.Entry(otpFoundForUpdate).CurrentValues.SetValues(updatedOtp);
                 await authDbContext.SaveChangesAsync();
                 return otpFoundForUpdate;
             }
