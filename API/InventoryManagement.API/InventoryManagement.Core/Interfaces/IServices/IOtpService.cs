@@ -12,6 +12,5 @@ namespace InventoryManagement.Core.Interfaces.IServices
         string GenerateOtp();
         Task<bool> CheckOtpExpiration(Guid otpId);
         string HashGeneratedOtp(string rawOtp);
-        string DecodeHashedOtp(string hashOtp);
     }
 }

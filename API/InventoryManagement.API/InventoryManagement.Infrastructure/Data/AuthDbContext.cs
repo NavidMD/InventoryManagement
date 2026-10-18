@@ -1,5 +1,6 @@
 ﻿
 using InventoryManagement.Core.Models;
+using InventoryManagement.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Infrastructure.Data
 {
-    public class AuthDbContext : IdentityDbContext<IdentityUser>
+    public class AuthDbContext : IdentityDbContext<User,IdentityRole<Guid>, Guid>
     {
         public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) { }
 

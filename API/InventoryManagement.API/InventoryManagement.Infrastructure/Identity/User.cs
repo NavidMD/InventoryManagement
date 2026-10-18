@@ -10,10 +10,8 @@ namespace InventoryManagement.Infrastructure.Identity
 {
     public class User : IdentityUser<Guid>
     {
-        // Navigation Property برای دسترسی به اطلاعات کارمند
         public Guid EmployeeId { get; set; }
-        public Employee? Employee { get; set; }
-        
+
         //اینها فیلدهایی هستند که بصورت داخلی در مدل IdentityUser وجود دارند و ارث بری شدن
 
         // public Guid Id { get; set; }

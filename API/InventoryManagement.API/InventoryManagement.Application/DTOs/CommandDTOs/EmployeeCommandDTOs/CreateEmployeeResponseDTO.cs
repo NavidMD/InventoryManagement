@@ -15,5 +15,6 @@ namespace InventoryManagement.Application.DTOs.CommandDTOs.EmployeeCommandDTOs
         public string PhoneNumber { get; set; } = string.Empty;
         public string EmailAddress { get; set; } = string.Empty;
         public Guid DepartmentId { get; set; }
+        public Guid UserId { get; set; }
     }
 }
