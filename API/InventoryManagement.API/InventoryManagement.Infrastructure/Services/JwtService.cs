@@ -1,6 +1,8 @@
-﻿using InventoryManagement.Application.Exceptions;
+﻿using InventoryManagement.Application.DTOs.CommandDTOs.AuthCommandDTOs;
+using InventoryManagement.Application.Exceptions;
 using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Interfaces.IServices;
+using InventoryManagement.Core.Models;
 using InventoryManagement.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +21,18 @@ namespace InventoryManagement.Infrastructure.Services
     public class JwtService(IConfiguration configuration, UserManager<User> userManager) : IJwtService
     {
         private readonly string _secretKey = configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("SecretKey is not configured!");
-        public async Task<string> GenerateToken(Employee employee)
+        public async Task<TokenResultModel> GenerateToken(Employee employee, CancellationToken cancellationToken)
         {
             //finding user in AspNetUsers table
-            var user = await userManager.Users.FirstOrDefaultAsync(u => u.EmployeeId == employee.Id);
+            var user = await userManager.Users.FirstOrDefaultAsync(u => u.EmployeeId == employee.Id, cancellationToken);
             if (user == null)
             {
                 throw new UserNotFoundException();
             }
-            var userRole = await userManager.GetRolesAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+            if (userRoles.Count == 0)
+                throw new InvalidOperationException("User has no assigned role");
+            var userRole = userRoles.First();
             //configuring token options
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -35,7 +40,7 @@ namespace InventoryManagement.Infrastructure.Services
             {
                 Subject = new System.Security.Claims.ClaimsIdentity([
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                            new Claim(ClaimTypes.Role, userRole.First()),
+                            new Claim(ClaimTypes.Role, userRole),
                             new Claim(ClaimTypes.Email, user.Email!)
                     ]),
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(configuration["Jwt:TokenExpiryInMinutes"])),
@@ -45,7 +50,7 @@ namespace InventoryManagement.Infrastructure.Services
             };
             var tokenHandler = new JsonWebTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return token;
+            return new TokenResultModel() { Token = token, UserRole = userRole, ExpireAt = tokenDescriptor.Expires.Value };
         }
     }
 }

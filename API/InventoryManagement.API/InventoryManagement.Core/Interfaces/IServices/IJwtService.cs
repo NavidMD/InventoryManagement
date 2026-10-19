@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Core.Entities;
+using InventoryManagement.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace InventoryManagement.Core.Interfaces.IServices
 {
     public interface IJwtService
     {
-        Task<string> GenerateToken(Employee employee);
+        Task<TokenResultModel> GenerateToken(Employee employee, CancellationToken cancellationToken);
 
     }
 }

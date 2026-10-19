@@ -39,7 +39,7 @@ namespace InventoryManagement.Infrastructure.Services
                 }
                 throw new UserOperationFailedException();
             }
-            //assign role
+            //assign Employee role to every new user  
             var roleResult = await userManager.AddToRoleAsync(newUser, Roles.Employee);
             if (!roleResult.Succeeded)
             {

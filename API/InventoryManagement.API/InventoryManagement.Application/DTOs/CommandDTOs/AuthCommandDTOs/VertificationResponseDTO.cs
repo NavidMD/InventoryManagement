@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Application.DTOs.CommandDTOs.AuthCommandDTOs
 {
-    internal class VertificationResponseDTO
+    public class VertificationResponseDTO
     {
+        public Guid EmployeeId { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string AccessToken { get; set; } = string.Empty;
+        public DateTime ExpiresAt { get; set; } 
+        public string Role { get; set; } = string.Empty;
     }
 }

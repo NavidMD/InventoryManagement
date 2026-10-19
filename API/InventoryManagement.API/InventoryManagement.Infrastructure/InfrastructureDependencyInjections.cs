@@ -29,6 +29,7 @@ namespace InventoryManagement.Infrastructure
             services.AddIdentityApiEndpoints<User>()
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<AuthDbContext>();
+            services.AddScoped<IdentitySeeder>();
             return services;
         }
     }

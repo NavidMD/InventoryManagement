@@ -15,14 +15,12 @@ namespace InventoryManagement.Infrastructure.Identity
     {
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole<Guid>> roleManager;
-        private readonly AuthDbContext authDbContext;
         private readonly IEmployeeRepository employeeRepository;
 
-        public IdentitySeeder(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager, AuthDbContext authDbContext, IEmployeeRepository employeeRepository)
+        public IdentitySeeder(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager, IEmployeeRepository employeeRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.authDbContext = authDbContext;
             this.employeeRepository = employeeRepository;
         }
         public async Task SeedAsync(CancellationToken cancellationToken)
@@ -46,7 +44,7 @@ namespace InventoryManagement.Infrastructure.Identity
             {
                 throw new InvalidOperationException("The initial admin employee not found!");
             }
-            //finding admin user in AspNetUsers
+            //finding admin user in dbo.AspNetUsers
             var adminUser = await userManager.Users.FirstOrDefaultAsync(u => u.EmployeeId == adminEmployee.Id);
             if (adminUser == null)
             {
@@ -59,7 +57,6 @@ namespace InventoryManagement.Infrastructure.Identity
                 };
                 //seeding admin user
                 var createAdminUserResult = await userManager.CreateAsync(admin);
-                var assignRoleResult = await userManager.AddToRoleAsync(admin, Roles.Admin);
                 if (!createAdminUserResult.Succeeded)
                 {
                     throw new InvalidOperationException("Failed to create the initial admin user!");
@@ -76,7 +73,5 @@ namespace InventoryManagement.Infrastructure.Identity
                         "Failed to assign the Admin role to admin user");
             }
         }
-
-
     }
 }

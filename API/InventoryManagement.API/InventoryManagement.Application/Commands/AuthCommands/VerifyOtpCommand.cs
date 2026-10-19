@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace InventoryManagement.Application.Commands.AuthCommands
 {
     public record VerifyOtpCommand(VertificationRequestDTO SentOtp) : IRequest<VertificationResponseDTO>;
-    public class VerifyOtpCommandHandler(IEmployeeRepository employeeRepository, IOtpRepository otpRepository, IOtpService otpService) : IRequestHandler<VerifyOtpCommand, VertificationResponseDTO>
+    public class VerifyOtpCommandHandler(IEmployeeRepository employeeRepository, IOtpRepository otpRepository, IOtpService otpService, IJwtService jwtService) : IRequestHandler<VerifyOtpCommand, VertificationResponseDTO>
     {
         public async Task<VertificationResponseDTO> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
         {
@@ -52,7 +52,16 @@ namespace InventoryManagement.Application.Commands.AuthCommands
             {
                 throw new EmployeeNotFoundException();
             }
-
+            //generating access token for successfull login response
+            var accessToken = await jwtService.GenerateToken(employee, cancellationToken);
+            return new VertificationResponseDTO() {
+                EmployeeId = employee.Id,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Role = accessToken.UserRole,
+                AccessToken = accessToken.Token,
+                ExpiresAt = accessToken.ExpireAt
+            };
         }
     }
 }
