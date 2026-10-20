@@ -14,5 +14,6 @@ namespace InventoryManagement.Core.Interfaces.IRepositories
         Task<OtpModel?> GetActiveOtpByIdAsync(Guid otpId);
         Task<OtpModel?> UpdateAsync(Guid otpId, OtpModel updatedOtp);
         Task<OtpModel?> GetActiveOtpByHashAsync(string hash);
+        Task<OtpModel?> DeactivateOtp(OtpModel otp);
     }
 }

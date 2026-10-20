@@ -58,5 +58,17 @@ namespace InventoryManagement.Infrastructure.Repositories
             }
             return null;
         }
+        public async Task<OtpModel?> DeactivateOtp(OtpModel otp)
+        {
+            var otpFoundForUpdate = await authDbContext.OtpChallenges.FirstOrDefaultAsync(o => o.Id  == otp.Id);
+            if (otpFoundForUpdate != null)
+            {
+                otpFoundForUpdate.IsActive = otp.IsActive;
+                otpFoundForUpdate.IsUsed = otp.IsUsed;
+                await authDbContext.SaveChangesAsync();
+                return otpFoundForUpdate;
+            }
+            return null;
+        }
     }
 }

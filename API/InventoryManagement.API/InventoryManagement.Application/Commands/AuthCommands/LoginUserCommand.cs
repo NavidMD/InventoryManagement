@@ -44,7 +44,7 @@ namespace InventoryManagement.Application.Commands.AuthCommands
                         Id = activeOtp.Id,
                         IsActive = false,
                     };
-                    await otpRepository.UpdateAsync(activeOtp.Id, deactivatedOtp);
+                    await otpRepository.DeactivateOtp(deactivatedOtp);
                 }
                 else
                 {

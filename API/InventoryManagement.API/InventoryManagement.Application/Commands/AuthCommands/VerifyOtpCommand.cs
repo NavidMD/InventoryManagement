@@ -5,6 +5,7 @@ using InventoryManagement.Core.Interfaces.IRepositories;
 using InventoryManagement.Core.Interfaces.IServices;
 using InventoryManagement.Core.Models;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,45 +15,44 @@ using System.Threading.Tasks;
 namespace InventoryManagement.Application.Commands.AuthCommands
 {
     public record VerifyOtpCommand(VertificationRequestDTO SentOtp) : IRequest<VertificationResponseDTO>;
-    public class VerifyOtpCommandHandler(IEmployeeRepository employeeRepository, IOtpRepository otpRepository, IOtpService otpService, IJwtService jwtService) : IRequestHandler<VerifyOtpCommand, VertificationResponseDTO>
+    public class VerifyOtpCommandHandler(ILogger<VerifyOtpCommandHandler> logger,IEmployeeRepository employeeRepository, IOtpRepository otpRepository, IOtpService otpService, IJwtService jwtService) : IRequestHandler<VerifyOtpCommand, VertificationResponseDTO>
     {
         public async Task<VertificationResponseDTO> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
         {
-            //finding entered otp in db
+            //finding otp in db - checking expiration
             var enteredOtpHash = otpService.HashGeneratedOtp(request.SentOtp.OtpCode);
             var otpFoundByHash = await otpRepository.GetActiveOtpByHashAsync(enteredOtpHash);
             if (otpFoundByHash == null)
             {
                 throw new InvalidOtpException();
             }
-            //checking found otp validation
             var otpExpired = await otpService.CheckOtpExpiration(otpFoundByHash.Id);
             if (otpExpired)
             {
                 //updating otp : deactivating expired otp
-                await otpRepository.UpdateAsync(otpFoundByHash.Id, new OtpModel()
+                await otpRepository.DeactivateOtp(new OtpModel()
                 {
                     Id = otpFoundByHash.Id,
-                    IsActive = false,
+                    IsActive = false
                 });
 
                 throw new OtpExpiredException();
             }
             //user signed in successfully
-            //updating otp : deactivating used otp
-            await otpRepository.UpdateAsync(otpFoundByHash.Id, new OtpModel()
+            //updating otp : deactivating used otp - finding user to create access token
+            await otpRepository.DeactivateOtp(new OtpModel()
             {
                 Id = otpFoundByHash.Id,
                 IsActive = false,
-                IsUsed = true,
+                IsUsed = true
             });
-            //finding user to create access token
+            
             var employee = await employeeRepository.GetByIdAsync(otpFoundByHash.EmployeeId);
             if (employee == null)
             {
                 throw new EmployeeNotFoundException();
             }
-            //generating access token for successfull login response
+            //generating access token
             var accessToken = await jwtService.GenerateToken(employee, cancellationToken);
             return new VertificationResponseDTO() {
                 EmployeeId = employee.Id,
