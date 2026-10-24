@@ -22,15 +22,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddProjectDI(builder.Configuration);
+//repositories
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IOtpRepository, OtpRepository>();
+//services
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IOtpService, OtpService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IOtpRepository, OtpRepository>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+
 
 //JWT Configuration
 builder.Services.AddAuthentication(options =>
@@ -68,6 +73,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(options =>
+{
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    //options.WithOrigins("https://localhost:4200");
+    options.WithOrigins("https://localhost:7180");
+    options.AllowCredentials();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

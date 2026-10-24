@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InventoryManagement.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,7 @@ namespace InventoryManagement.Application.DTOs.CommandDTOs.AuthCommandDTOs
 {
     public class VertificationResponseDTO
     {
-        public Guid EmployeeId { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string AccessToken { get; set; } = string.Empty;
-        public DateTime ExpiresAt { get; set; } 
-        public string Role { get; set; } = string.Empty;
+        public AccessTokenResultModel AccessToken { get; set; } = new AccessTokenResultModel();
+        public RawRefreshTokenResultModel RefreshToken { get; set; } = new RawRefreshTokenResultModel();
     }
 }

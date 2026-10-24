@@ -17,5 +17,6 @@ namespace InventoryManagement.Infrastructure.Data
         public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options) { }
 
         public DbSet<OtpModel> OtpChallenges { get; set; }
+        public DbSet<RefreshTokenModel> RefreshTokens { get; set; }
     }
 }

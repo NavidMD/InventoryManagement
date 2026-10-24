@@ -15,7 +15,12 @@ using System.Threading.Tasks;
 namespace InventoryManagement.Application.Commands.AuthCommands
 {
     public record VerifyOtpCommand(VertificationRequestDTO SentOtp) : IRequest<VertificationResponseDTO>;
-    public class VerifyOtpCommandHandler(ILogger<VerifyOtpCommandHandler> logger,IEmployeeRepository employeeRepository, IOtpRepository otpRepository, IOtpService otpService, IJwtService jwtService) : IRequestHandler<VerifyOtpCommand, VertificationResponseDTO>
+    public class VerifyOtpCommandHandler(
+        IEmployeeRepository employeeRepository,
+        IOtpRepository otpRepository,
+        IOtpService otpService,
+        IJwtService jwtService,
+        IRefreshTokenService refreshTokenService) : IRequestHandler<VerifyOtpCommand, VertificationResponseDTO>
     {
         public async Task<VertificationResponseDTO> Handle(VerifyOtpCommand request, CancellationToken cancellationToken)
         {
@@ -46,21 +51,31 @@ namespace InventoryManagement.Application.Commands.AuthCommands
                 IsActive = false,
                 IsUsed = true
             });
-            
+
             var employee = await employeeRepository.GetByIdAsync(otpFoundByHash.EmployeeId);
             if (employee == null)
             {
                 throw new EmployeeNotFoundException();
             }
-            //generating access token
+            //generating access token + refresh token
+            var refreshToken = await refreshTokenService.HandleRefreshToken(employee, cancellationToken);
             var accessToken = await jwtService.GenerateToken(employee, cancellationToken);
-            return new VertificationResponseDTO() {
-                EmployeeId = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Role = accessToken.UserRole,
-                AccessToken = accessToken.Token,
-                ExpiresAt = accessToken.ExpireAt
+            return new VertificationResponseDTO()
+            {
+                AccessToken = new AccessTokenResultModel()
+                {
+                    EmployeeId = employee.Id,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Role = accessToken.UserRole,
+                    AccessToken = accessToken.Token,
+                    ExpiresAt = accessToken.ExpireAt,
+                },
+                RefreshToken = new RawRefreshTokenResultModel()
+                {
+                    RawRefreshToken = refreshToken.RawRefreshToken,
+                    ExpiresAt = refreshToken.ExpiresAt
+                }
             };
         }
     }

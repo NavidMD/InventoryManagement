@@ -22,8 +22,21 @@ namespace InventoryManagement.API.Controllers
         public async Task<IActionResult> VerifyOtp([FromBody] VertificationRequestDTO request)
         {
             var result = await mediator.Send(new VerifyOtpCommand(request));
+            Response.Cookies.Append("refreshToken", result.RefreshToken.RawRefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Lax,
+                Expires = new DateTimeOffset(DateTime.SpecifyKind(result.RefreshToken.ExpiresAt, DateTimeKind.Utc))
+            });
+            return Ok(result.AccessToken);
+        }
+        //POST : {apibaseurl}/api/auth/refresh
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh()
+        {
+            var result = await mediator.Send(new RefreshTokenCommand());
             return Ok(result);
         }
-
     }
 }
