@@ -35,21 +35,32 @@ namespace InventoryManagement.Infrastructure.Migrations.AuthDb
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FailedAttempts")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("OtpHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OtpChallenges");
+                    b.HasIndex("EmployeeId")
+                        .IsUnique()
+                        .HasFilter("[IsActive] = 1");
+
+                    b.ToTable("OtpChallenges", (string)null);
                 });
 
             modelBuilder.Entity("InventoryManagement.Core.Models.RefreshTokenModel", b =>
@@ -76,7 +87,9 @@ namespace InventoryManagement.Infrastructure.Migrations.AuthDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("RefreshTokens");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("InventoryManagement.Infrastructure.Identity.User", b =>
@@ -277,6 +290,15 @@ namespace InventoryManagement.Infrastructure.Migrations.AuthDb
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("InventoryManagement.Core.Models.RefreshTokenModel", b =>
+                {
+                    b.HasOne("InventoryManagement.Infrastructure.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

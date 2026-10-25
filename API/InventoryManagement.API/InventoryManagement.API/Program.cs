@@ -1,4 +1,5 @@
 using InventoryManagement.API;
+using InventoryManagement.API.Exceptions;
 using InventoryManagement.Core.Interfaces.IRepositories;
 using InventoryManagement.Core.Interfaces.IServices;
 using InventoryManagement.Infrastructure.Data;
@@ -20,6 +21,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//custom exception handler
+builder.Services.AddExceptionHandler<CustomGlobalExceptionHandler>();
 
 builder.Services.AddProjectDI(builder.Configuration);
 //repositories
@@ -63,6 +67,9 @@ builder.Services.AddAuthorization();
 
 
 var app = builder.Build();
+
+//use custom exception handler
+app.UseExceptionHandler();
 
 // Configure the HTTP request pipeline.
 //these methods add middlewares to pipeline

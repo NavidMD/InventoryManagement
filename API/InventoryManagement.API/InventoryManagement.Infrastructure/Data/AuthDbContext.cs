@@ -1,5 +1,6 @@
 ﻿
 using InventoryManagement.Core.Models;
+using InventoryManagement.Infrastructure.Configurations;
 using InventoryManagement.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -18,5 +19,12 @@ namespace InventoryManagement.Infrastructure.Data
 
         public DbSet<OtpModel> OtpChallenges { get; set; }
         public DbSet<RefreshTokenModel> RefreshTokens { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new OtpConfiguration());
+            builder.ApplyConfiguration(new RefreshTokenConfiguration());
+            base.OnModelCreating(builder);
+        }
     }
 }
