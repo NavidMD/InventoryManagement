@@ -20,6 +20,9 @@ namespace InventoryManagement.Infrastructure.Configurations
             builder.Property(x => x.StorageBalance)
                 .IsRequired()
                 .HasDefaultValue(0);
+            //هر رکورد از این مدل در دیتابیس باید ورژن بندی بشه
+            builder.Property(x => x.RowVersion)
+                .IsRowVersion();
 
             //Relations
             builder.HasOne(x => x.Product)

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using InventoryManagement.Application.Commands.ReceiptCommands;
+using InventoryManagement.Application.DTOs.CommandDTOs.ReceiptCommandDTOs;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +10,11 @@ namespace InventoryManagement.API.Controllers
     [ApiController]
     public class ReceiptsController(IMediator mediator) : ControllerBase
     {
-        //[HttpPost("addreceipt")]
-        //public async Task<IActionResult> AddReceipt([FromBody] CreateReceiptRequestDTO request)
-        //{
-
-        //}
+        [HttpPost("submit")]
+        public async Task<IActionResult> SubmitReceipt([FromBody] CreateReceiptRequestDTO request)
+        {
+            var result = await mediator.Send(new CreateReceiptCommand(request));
+            return Ok(result);
+        }
     }
 }

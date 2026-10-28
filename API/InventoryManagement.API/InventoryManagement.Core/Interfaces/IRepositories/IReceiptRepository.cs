@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Core.Interfaces.IRepositories
 {
-    internal class IReceiptRepository
+    public class IReceiptRepository
     {
     }
 }

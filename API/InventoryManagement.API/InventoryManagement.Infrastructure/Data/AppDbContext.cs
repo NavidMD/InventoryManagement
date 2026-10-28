@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Core.Entities;
+using InventoryManagement.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,14 @@ namespace InventoryManagement.Infrastructure.Data
                 .StartsAt(1)
                 .IncrementsBy(1);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new InventoryConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+            modelBuilder.ApplyConfiguration(new ReceiptConfiguration());
+            modelBuilder.ApplyConfiguration(new ReceiptItemConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }

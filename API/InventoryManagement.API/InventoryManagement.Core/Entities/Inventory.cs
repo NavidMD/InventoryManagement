@@ -16,5 +16,6 @@ namespace InventoryManagement.Core.Entities
         public Product? Product { get; set; }
         [Required]
         public int StorageBalance { get; set; }
+        public byte[] RowVersion { get; set; } = null!;
     }
 }

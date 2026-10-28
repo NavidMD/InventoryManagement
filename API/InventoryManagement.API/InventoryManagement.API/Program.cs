@@ -24,6 +24,7 @@ builder.Services.AddSwaggerGen();
 
 //custom exception handler
 builder.Services.AddExceptionHandler<CustomGlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddProjectDI(builder.Configuration);
 //repositories
