@@ -1,5 +1,4 @@
-﻿using InventoryManagement.Application._ٍExceptions;
-using InventoryManagement.Application.Exceptions;
+﻿using InventoryManagement.Application.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using ApplicationException = InventoryManagement.Application.Exceptions.ApplicationException;
 
@@ -14,7 +13,7 @@ namespace InventoryManagement.API.Exceptions
             string message = exception.Message;
             switch (exception)
             {
-                case DuplicateUserException:
+                case DuplicateUserException or InsufficientInventoryException:
                     statusCode = StatusCodes.Status409Conflict;
                     break;
                 case EmployeeNotFoundException or UserNotFoundException:

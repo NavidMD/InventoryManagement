@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\CommandDTOs\InventoryCommandDTOs\" />
-    <Folder Include="DTOs\CommandDTOs\ReceiptItemCommandDTOs\" />
   </ItemGroup>
 
 </Project>

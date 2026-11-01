@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ApplicationException = InventoryManagement.Application.Exceptions.ApplicationException;
 
-namespace InventoryManagement.Application._ٍExceptions
+namespace InventoryManagement.Application.Exceptions
 {
     public sealed class InvalidOtpException : ApplicationException
     {

@@ -66,5 +66,15 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .ExecuteDeleteAsync();
             return rowsDeleted > 0;
         }
+
+        public async Task<int> DecreaseInventoryAsync(Guid productId, int decreaseCount, CancellationToken cancellationToken)
+        {
+            return await context.Inventories
+                .Where(i => i.ProductId == productId && i.StorageBalance >= decreaseCount)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(x => x.StorageBalance, x => x.StorageBalance - decreaseCount),
+                    cancellationToken);
+        }
     }
 }
+

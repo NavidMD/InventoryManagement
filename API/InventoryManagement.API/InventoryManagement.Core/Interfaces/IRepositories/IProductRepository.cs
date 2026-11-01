@@ -14,5 +14,6 @@ namespace InventoryManagement.Core.Interfaces.IRepositories
         Task<Product?> GetByIdAsync(Guid id);
         Task<Product?> UpdateAsync(Guid id, Product updatedProduct);
         Task<bool> DeleteAsync(Guid id);
+        Task<int> DecreaseInventoryAsync(Guid productId, int decreaseCount, CancellationToken cancellationToken);
     }
 }

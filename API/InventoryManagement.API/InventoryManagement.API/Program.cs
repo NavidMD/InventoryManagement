@@ -1,5 +1,6 @@
 using InventoryManagement.API;
 using InventoryManagement.API.Exceptions;
+using InventoryManagement.Application.Abstractions;
 using InventoryManagement.Core.Interfaces.IRepositories;
 using InventoryManagement.Core.Interfaces.IServices;
 using InventoryManagement.Infrastructure.Data;
@@ -34,12 +35,16 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IOtpRepository, OtpRepository>();
+builder.Services.AddScoped<IReceiptRepository, ReceiptRepository>();
+
 //services
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IOtpService, OtpService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+//transactions
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 //JWT Configuration
