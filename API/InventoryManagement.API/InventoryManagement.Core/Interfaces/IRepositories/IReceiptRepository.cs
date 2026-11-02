@@ -11,7 +11,7 @@ namespace InventoryManagement.Core.Interfaces.IRepositories
     {
         Task<Receipt> CreateAsync(Receipt receipt, CancellationToken cancellationToken);
         Task<IEnumerable<Receipt>> GetAllAsync();
-        Task<Receipt> GetByIdAsync(Guid id);
+        Task<Receipt?> GetByIdAsync(Guid id);
         Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }

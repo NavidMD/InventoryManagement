@@ -16,7 +16,7 @@ namespace InventoryManagement.API.Exceptions
                 case DuplicateUserException or InsufficientInventoryException:
                     statusCode = StatusCodes.Status409Conflict;
                     break;
-                case EmployeeNotFoundException or UserNotFoundException:
+                case EmployeeNotFoundException or UserNotFoundException or ReceiptNotFoundException:
                     statusCode = StatusCodes.Status404NotFound;
                     break;
                 case InvalidOtpException or OtpExpiredException:

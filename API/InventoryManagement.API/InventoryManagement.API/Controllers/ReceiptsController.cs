@@ -16,13 +16,18 @@ namespace InventoryManagement.API.Controllers
         public async Task<IActionResult> SubmitReceipt([FromBody] CreateReceiptRequestDTO request)
         {
             var result = await mediator.Send(new CreateReceiptCommand(request));
-            return Ok(result);
-            //return CreatedAtAction(nameof(GetReceiptById), new { receiptId = result.Id }, result);
+            return CreatedAtAction(nameof(GetReceiptById), new { receiptId = result.Id }, result);
         }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetAllReceiptsResponseDTO>>> GetAllReceipts()
         {
             var result = await mediator.Send(new GetAllReceiptsQuery());
+            return Ok(result);
+        }
+        [HttpGet("{receiptId:guid}")]
+        public async Task<IActionResult> GetReceiptById([FromRoute] Guid receiptId)
+        {
+            var result = await mediator.Send(new GetReceiptByIdQuery(receiptId));
             return Ok(result);
         }
     }

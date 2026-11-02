@@ -41,9 +41,14 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public Task<Receipt> GetByIdAsync(Guid id)
+        public Task<Receipt?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return context.Receipts
+                .Include(r => r.ReceiptItems)
+                    .ThenInclude(ri => ri.Product)
+                .Include(r => r.Employee)
+                    .ThenInclude (re => re!.Department)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
     }

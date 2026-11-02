@@ -14,6 +14,7 @@ namespace InventoryManagement.Application.DTOs.QueryDTOs.DefaultDTOs
         public Guid ReceiptId { get; set; }
         public Guid ProductId { get; set; }
         public string ProductTitle { get; set; } = string.Empty;
+        public string ProductSerialNumber { get; set; } = string.Empty;
         public int Quantity { get; set; }
     }
 }

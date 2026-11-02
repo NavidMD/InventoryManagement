@@ -29,6 +29,7 @@ namespace InventoryManagement.Application.Queries.ReceiptQueries
                     Id = ri.Id,
                     ProductId = ri.ProductId,
                     ProductTitle = ri.Product!.Title,
+                    ProductSerialNumber = ri.Product!.SerialNumber,
                     Quantity = ri.Quantity,
                     ReceiptId = ri.ReceiptId
                 }).ToList()
