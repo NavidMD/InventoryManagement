@@ -30,5 +30,23 @@ namespace InventoryManagement.API.Controllers
             var result = await mediator.Send(new GetReceiptByIdQuery(receiptId));
             return Ok(result);
         }
+        [HttpGet("byEmployee/{employeeId:guid}")]
+        public async Task<ActionResult<IEnumerable<GetReceiptsByDepartmentIdResponseDTO>>> GetReceiptByEmployeeId([FromRoute] Guid employeeId)
+        {
+            var result = await mediator.Send(new GetReceiptsByEmployeeIdQuery(employeeId));
+            return Ok(result);
+        }
+        [HttpGet("byDepartment/{departmentId:guid}")]
+        public async Task<ActionResult<IEnumerable<GetReceiptsByDepartmentIdResponseDTO>>> GetReceiptsByDepartmentId([FromRoute] Guid departmentId)
+        {
+            var result = await mediator.Send(new GetReceiptsByDepartmentIdQuery(departmentId));
+            return Ok(result);
+        }
+        [HttpGet("byProduct/{productId:guid}")]
+        public async Task<ActionResult<IEnumerable<GetReceiptsByProductIdResponseDTO>>> GetReceiptsByProductId([FromRoute] Guid productId)
+        {
+            var result = await mediator.Send(new GetReceiptsByProductIdQuery(productId));
+            return Ok(result);
+        }
     }
 }

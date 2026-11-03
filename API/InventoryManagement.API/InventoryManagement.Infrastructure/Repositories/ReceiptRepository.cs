@@ -38,6 +38,31 @@ namespace InventoryManagement.Infrastructure.Repositories
                     .ThenInclude(ri => ri.Product)
                 .Include(r => r.Employee)
                     .ThenInclude(re => re!.Department)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Receipt>> GetByDepartmentIdAsync(Guid departmentId)
+        {
+            return await context.Receipts
+                .Where(r => r.Employee!.DepartmentId == departmentId)
+                .Include(r => r.Employee)
+                    .ThenInclude(ed => ed!.Department)
+                .Include(r => r.ReceiptItems)
+                    .ThenInclude(ri => ri.Product)
+                .AsNoTracking()
+                .ToListAsync(); 
+        }
+
+        public async Task<IEnumerable<Receipt>> GetByEmployeeIdAsync(Guid employeeId)
+        {
+            return await context.Receipts
+                .Where(r => r.EmployeeId == employeeId)
+                .Include(r => r.Employee)
+                    .ThenInclude(e => e!.Department)
+                .Include(r => r.ReceiptItems)
+                    .ThenInclude(ri => ri.Product)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -47,9 +72,21 @@ namespace InventoryManagement.Infrastructure.Repositories
                 .Include(r => r.ReceiptItems)
                     .ThenInclude(ri => ri.Product)
                 .Include(r => r.Employee)
-                    .ThenInclude (re => re!.Department)
+                    .ThenInclude(re => re!.Department)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
+        public async Task<IEnumerable<Receipt>> GetByProductIdAsync(Guid productId)
+        {
+            return await context.Receipts
+               .Where(r => r.ReceiptItems.Any(ri => ri.ProductId == productId))
+               .Include(r => r.ReceiptItems)
+                   .ThenInclude(ri => ri.Product)
+               .Include(r => r.Employee)
+                   .ThenInclude(re => re!.Department)
+               .AsNoTracking()
+               .ToListAsync();
+        }
     }
 }
