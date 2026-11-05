@@ -3,8 +3,10 @@ using InventoryManagement.API.Exceptions;
 using InventoryManagement.Application.Abstractions;
 using InventoryManagement.Core.Interfaces.IRepositories;
 using InventoryManagement.Core.Interfaces.IServices;
+using InventoryManagement.Core.Interfaces.Queries;
 using InventoryManagement.Infrastructure.Data;
 using InventoryManagement.Infrastructure.Identity;
+using InventoryManagement.Infrastructure.Queries;
 using InventoryManagement.Infrastructure.Repositories;
 using InventoryManagement.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -36,6 +38,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IOtpRepository, OtpRepository>();
 builder.Services.AddScoped<IReceiptRepository, ReceiptRepository>();
+builder.Services.AddScoped<IReceiptReadRepository, ReceiptReadRepository>();
 
 //services
 builder.Services.AddScoped<IEmailService, EmailService>();

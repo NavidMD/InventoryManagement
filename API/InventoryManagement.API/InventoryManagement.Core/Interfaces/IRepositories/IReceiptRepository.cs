@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Core.Entities;
+using InventoryManagement.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

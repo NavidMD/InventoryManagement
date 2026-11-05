@@ -1,7 +1,9 @@
 ﻿using InventoryManagement.Core.Entities;
 using InventoryManagement.Core.Interfaces.IRepositories;
+using InventoryManagement.Core.Models;
 using InventoryManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
