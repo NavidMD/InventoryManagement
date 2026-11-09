@@ -1,0 +1,44 @@
+:root {
+  /* ---------- Font families ---------- */
+  --font-iranSansX: "IranSansX",
+  /* ---------- Font sizes (type scale) ---------- */
+  --text-2xs: 0.6875rem;  /* 11px – badges (In Stock, Low Stock, Completed) */
+  --text-xs:  0.75rem;    /* 12px – captions, reviews count, helper text */
+  --text-sm:  0.8125rem;  /* 13px – table cells, product names, links */
+  --text-md:  0.875rem;   /* 14px – body, nav links, buttons, inputs */
+  --text-lg:  1rem;       /* 16px – product price, emphasized body */
+  --text-xl:  1.125rem;   /* 18px – logo text, section headings (Categories) */
+  --text-2xl: 1.375rem;   /* 22px – Sign In, Welcome Back */
+  --text-3xl: 1.625rem;   /* 26px – page titles (My Receipts), product title */
+  --text-4xl: 1.875rem;   /* 30px – detail page price ($199.00) */
+
+  /* ---------- Font weights ---------- */
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ---------- Line heights ---------- */
+  --leading-tight:   1.2;   /* titles, prices */
+  --leading-snug:    1.35;  /* card titles */
+  --leading-normal:  1.5;   /* body */
+  --leading-relaxed: 1.65;  /* descriptions */
+
+  /* ---------- Letter spacing ---------- */
+  --tracking-tight:  -0.01em;  /* large headings */
+  --tracking-normal: 0;
+  --tracking-wide:   0.02em;   /* badges, table headers */
+}
+
+html {
+  font-family: var(--font-iranSansX);
+  font-size: 16px;
+}
+
+body {
+  font-size: var(--text-md);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--color-text-body);
+}

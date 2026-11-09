@@ -1,0 +1,94 @@
+:root {
+  /* ---------- Brand / Primary (Indigo) ---------- */
+  --color-primary-900: #2E2A8F;   /* darkest, logo shadow */
+  --color-primary-700: #3F2FC8;   /* Sign In button, active page number */
+  --color-primary-600: #4F46E5;   /* price text, links, active tab underline */
+  --color-primary-500: #6C63D9;   /* Add to Cart buttons (cards) */
+  --color-primary-400: #7C74E8;   /* search button, hover */
+  --color-primary-200: #C9C6F5;   /* focus ring, light borders */
+  --color-primary-100: #DCDDF7;   /* sidebar active item background */
+  --color-primary-50:  #EEEEFC;   /* subtle highlights */
+
+  /* ---------- Backgrounds / Surfaces ---------- */
+  --color-bg-page:        #E4E6F7;  /* outer lavender page background */
+  --color-bg-surface:     #FFFFFF;  /* cards, panels, header */
+  --color-bg-surface-alt: #F7F7FD;  /* table header, soft panels */
+  --color-bg-sidebar:     #F3F3FB;  /* categories sidebar */
+  --color-bg-auth-panel:  #E9E9FB;  /* sign-in left illustration panel */
+  --color-bg-product-img: #F1F1F6;  /* product image tile */
+  --color-bg-input:       #FFFFFF;
+
+  /* ---------- Text ---------- */
+  --color-text-heading:   #1E1B4B;  /* headings, product names */
+  --color-text-body:      #3B3A6B;  /* body text, nav links */
+  --color-text-muted:     #6B6B8F;  /* placeholders, captions */
+  --color-text-on-primary:#FFFFFF;  /* text on primary buttons */
+  --color-text-link:      #4F46E5;  /* Sign Up, Forgot password */
+
+  /* ---------- Borders / Dividers ---------- */
+  --color-border:         #E3E4F3;
+  --color-border-strong:  #CFD0E8;
+  --color-divider:        #ECECF6;
+
+  /* ---------- Status: Success (In Stock / Completed) ---------- */
+  --color-success-text:   #1E9E5A;
+  --color-success-bg:     #DDF5E6;
+  --color-success-border: #BDEBD0;
+
+  /* ---------- Status: Warning (Low Stock) ---------- */
+  --color-warning-text:   #E08A1E;
+  --color-warning-bg:     #FEF0D5;
+
+  /* ---------- Status: Danger (Cancelled) ---------- */
+  --color-danger-text:    #D93636;
+  --color-danger-bg:      #FDE2E2;
+
+  /* ---------- Badges / Accents ---------- */
+  --color-badge-cart:     #EF4444;  /* cart counter badge */
+  --color-rating-star:    #F5B301;  /* review stars */
+  --color-avatar-bg:      #5B5F9E;  /* "JD" avatar */
+  --color-avatar-text:    #FFFFFF;
+
+  /* ---------- Illustration (cart & bag) ---------- */
+  --color-illus-bag:      #F5A623;
+  --color-illus-bag-light:#FBBF24;
+  --color-illus-cart:     #4338CA;
+  --color-illus-blob:     #DAD9F6;
+
+  /* ---------- Third-party: Google button ---------- */
+  --color-google-blue:    #4285F4;
+  --color-google-green:   #34A853;
+  --color-google-yellow:  #FBBC05;
+  --color-google-red:     #EA4335;
+
+  /* ---------- Shadows ---------- */
+  --color-shadow:         rgba(63, 47, 200, 0.10);
+}
+
+/* Semantic aliases (component-level tokens) */
+:root {
+  --btn-primary-bg:        var(--color-primary-700);
+  --btn-primary-text:      var(--color-text-on-primary);
+  --btn-card-bg:           var(--color-primary-500);
+  --btn-search-bg:         var(--color-primary-400);
+  --btn-outline-border:    var(--color-primary-600);
+  --btn-outline-text:      var(--color-primary-600);
+
+  --nav-link:              var(--color-text-body);
+  --nav-link-active:       var(--color-primary-600);
+  --nav-indicator:         var(--color-primary-600);
+
+  --sidebar-item-active-bg:   var(--color-primary-100);
+  --sidebar-item-active-text: var(--color-primary-600);
+
+  --input-border:          var(--color-border);
+  --input-placeholder:     var(--color-text-muted);
+  --input-focus-ring:      var(--color-primary-200);
+
+  --price-text:            var(--color-primary-600);
+  --table-header-bg:       var(--color-bg-surface-alt);
+  --table-row-border:      var(--color-divider);
+
+  --pagination-active-bg:  var(--color-primary-700);
+  --pagination-active-text:var(--color-text-on-primary);
+}
